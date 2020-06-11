@@ -11,15 +11,14 @@ class UserController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: "Validation failed" });
+      return res.status(400).json({ error: "Validation fails" });
     }
 
     const userExists = await User.findOne({ where: { email: req.body.email } });
 
     if (userExists) {
-      return res.status(400).json({ error: "User already exists." });
+      return res.status(400).json({ error: "User already exists" });
     }
-
     const { id, name, email, provider } = await User.create(req.body);
 
     return res.json({
@@ -34,6 +33,7 @@ class UserController {
     const schema = Yup.object().shape({
       name: Yup.string(),
       email: Yup.string().email(),
+      avatar: Yup.number(),
       oldPassword: Yup.string().min(6),
       password: Yup.string()
         .min(6)
@@ -46,9 +46,8 @@ class UserController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: "Validation failed" });
+      return res.status(400).json({ error: "Validation fails" });
     }
-
     const { email, oldPassword } = req.body;
 
     const user = await User.findByPk(req.userId);
@@ -57,7 +56,7 @@ class UserController {
       const userExists = await User.findOne({ where: { email } });
 
       if (userExists) {
-        return res.status(400).json({ error: "User already exists." });
+        return res.status(400).json({ error: "User already exists" });
       }
     }
 
