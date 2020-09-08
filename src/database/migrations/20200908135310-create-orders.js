@@ -24,7 +24,7 @@ module.exports = {
         allowNull: false,
       },
       delivery: {
-        type: Sequelize.BOOLEAN,
+        type: Sequelize.STRING,
         defaultValue: false,
         allowNull: false,
       },

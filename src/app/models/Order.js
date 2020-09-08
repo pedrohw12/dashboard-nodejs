@@ -10,7 +10,7 @@ class Order extends Model {
         product: Sequelize.STRING,
         client: Sequelize.STRING,
         price: Sequelize.INTEGER,
-        delivery: Sequelize.BOOLEAN,
+        delivery: Sequelize.STRING,
       },
       {
         sequelize,

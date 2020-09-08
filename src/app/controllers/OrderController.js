@@ -7,14 +7,14 @@ class SaleController {
     const orders = await Order.findAll({
       where: { user_id: req.userId },
       order: ["date"],
-      attributes: ["id", "date"],
-      include: [
-        {
-          model: User,
-          as: 'user',
-          attributes: ["id", "name"],
-        },
-      ],
+      attributes: ["id", "date", "product", "client", "price", "delivery"],
+      // include: [
+      //   {
+      //     model: User,
+      //     as: "user",
+      //     attributes: ["id", "name"],
+      //   },
+      // ],
     });
 
     return res.json(orders);
