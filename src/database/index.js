@@ -4,15 +4,16 @@ import mongoose from "mongoose";
 import User from "../app/models/User";
 import File from "../app/models/File";
 import Appointment from "../app/models/Appointment";
+import Order from "../app/models/Order";
 
 import databaseConfig from "../config/database";
 
-const models = [User, File, Appointment];
+const models = [User, File, Appointment, Order];
 
 class Database {
   constructor() {
     this.init();
-    this.mongo();
+    // this.mongo();
   }
 
   init() {
@@ -25,12 +26,12 @@ class Database {
       );
   }
 
-  mongo() {
-    this.mongoConnection = mongoose.connect(
-      "mongodb://localhost:27017/dashboardApi",
-      { useNewUrlParser: true, useFindAndModify: true, useUnifiedTopology: true }
-    );
-  }
+  // mongo() {
+  //   this.mongoConnection = mongoose.connect(
+  //     "mongodb://localhost:27017/dashboardApi",
+  //     { useNewUrlParser: true, useFindAndModify: true, useUnifiedTopology: true }
+  //   );
+  // }
 }
 
 export default new Database();
