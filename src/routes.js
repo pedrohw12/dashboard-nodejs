@@ -8,7 +8,9 @@ import FileController from "./app/controllers/FileController";
 import AppointmentController from "./app/controllers/AppointmentController";
 import ScheduleController from "./app/controllers/ScheduleController";
 import NotificationController from "./app/controllers/NotificationController";
-import SaleController from "./app/controllers/OrderController";
+import OrderController from "./app/controllers/OrderController";
+import StockController from "./app/controllers/StockController";
+import ClientController from "./app/controllers/ClientController";
 
 import authMiddleware from "./app/middlewares/auth";
 
@@ -26,8 +28,14 @@ routes.get("/appointments", AppointmentController.index);
 routes.post("/appointments", AppointmentController.store);
 routes.delete("/appointments/:id", AppointmentController.delete);
 
-routes.get("/orders", SaleController.index);
-routes.post("/orders", SaleController.store);
+routes.get("/orders", OrderController.index);
+routes.post("/orders", OrderController.store);
+
+routes.get("/stock", StockController.index);
+routes.post("/stock", StockController.store);
+
+routes.get("/clients", ClientController.index);
+routes.post("/clients", ClientController.store);
 
 routes.get("/schedule", ScheduleController.index);
 
