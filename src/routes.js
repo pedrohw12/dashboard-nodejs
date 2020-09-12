@@ -30,12 +30,15 @@ routes.delete("/appointments/:id", AppointmentController.delete);
 
 routes.get("/orders", OrderController.index);
 routes.post("/orders", OrderController.store);
+routes.delete("/orders/:id", OrderController.delete);
 
 routes.get("/stock", StockController.index);
 routes.post("/stock", StockController.store);
+routes.delete("/stock/:id", StockController.delete);
 
 routes.get("/clients", ClientController.index);
 routes.post("/clients", ClientController.store);
+routes.delete("/clients/:id", ClientController.delete);
 
 routes.get("/schedule", ScheduleController.index);
 

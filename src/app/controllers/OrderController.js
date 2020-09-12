@@ -34,6 +34,18 @@ class SaleController {
 
     return res.json(order);
   }
+
+  async delete(req, res) {
+    const order = await Order.findByPk(req.params.id);
+
+    if (!order) {
+      return res.status(401).json({ message: "Order not found." });
+    }
+
+    await order.destroy();
+
+    return res.json(order);
+  }
 }
 
 export default new SaleController();

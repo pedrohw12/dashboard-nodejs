@@ -31,6 +31,18 @@ class StockController {
 
     return res.json(stock);
   }
+
+  async delete(req, res) {
+    const stock = await Stock.findByPk(req.params.id);
+
+    if (!stock) {
+      return res.status(401).json({ message: "Stock not found." });
+    }
+
+    await stock.destroy();
+
+    return res.json(stock);
+  }
 }
 
 export default new StockController();
