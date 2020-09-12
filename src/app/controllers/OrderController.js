@@ -17,7 +17,16 @@ class SaleController {
       // ],
     });
 
-    return res.json(orders);
+    const orderPrices = orders.map((item) => item.price);
+
+    const totalOrdersPrice = orderPrices.reduce((a, b) => a + b, 0);
+
+    const orderList = {
+      orders,
+      totalOrdersPrice,
+    };
+
+    return res.json(orderList);
   }
 
   async store(req, res) {

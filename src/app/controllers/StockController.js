@@ -4,7 +4,7 @@ import User from "../models/User";
 
 class StockController {
   async index(req, res) {
-    const stock = await Stock.findAll({
+    const stocks = await Stock.findAll({
       where: { user_id: req.userId },
       order: ["date"],
       attributes: ["id", "date", "price"],
@@ -17,7 +17,16 @@ class StockController {
       // ],
     });
 
-    return res.json(stock);
+    const stockPrices = stocks.map((item) => item.price);
+
+    const totalStockPrice = stockPrices.reduce((a, b) => a + b, 0);
+
+    const stockList = {
+      stocks,
+      totalStockPrice,
+    };
+
+    return res.json(stockList);
   }
 
   async store(req, res) {
