@@ -52,6 +52,18 @@ class StockController {
 
     return res.json(stock);
   }
+
+  async update(req, res) {
+    const stock = await Stock.findByPk(req.params.id);
+
+    if (!stock) {
+      return res.status(401).json({ message: "Stock not found." });
+    }
+
+    await stock.update(req.body);
+
+    return res.json(stock);
+  }
 }
 
 export default new StockController();

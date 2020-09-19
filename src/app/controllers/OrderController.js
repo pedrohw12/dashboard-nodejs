@@ -1,6 +1,5 @@
 import * as Yup from "yup";
 import Order from "../models/Order";
-import User from "../models/User";
 
 class SaleController {
   async index(req, res) {
@@ -52,6 +51,18 @@ class SaleController {
     }
 
     await order.destroy();
+
+    return res.json(order);
+  }
+
+  async update(req, res) {
+    const order = await Order.findByPk(req.params.id);
+
+    if (!order) {
+      return res.status(401).json({ message: "Order not found." });
+    }
+
+    await order.update(req.body);
 
     return res.json(order);
   }

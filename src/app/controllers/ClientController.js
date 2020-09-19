@@ -46,6 +46,18 @@ class ClientController {
 
     return res.json(client);
   }
+
+  async update(req, res) {
+    const client = await Client.findByPk(req.params.id);
+
+    if (!client) {
+      return res.status(401).json({ message: "Client not found." });
+    }
+
+    await client.update(req.body);
+
+    return res.json(client);
+  }
 }
 
 export default new ClientController();
