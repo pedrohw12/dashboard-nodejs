@@ -16,7 +16,11 @@ class ChangePasswordController {
     await Mail.sendMail({
       to: email,
       subject: "Teste de envio de e-mail",
-      text: `Sua nova senha é ${randomPassword}`,
+      template: "redefinePassword",
+      context: {
+        user: user.name,
+        password: randomPassword,
+      },
     });
 
     return res.json({ message: "E-mail sent" });
