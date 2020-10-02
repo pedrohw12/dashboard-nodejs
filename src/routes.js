@@ -11,6 +11,7 @@ import NotificationController from "./app/controllers/NotificationController";
 import OrderController from "./app/controllers/OrderController";
 import StockController from "./app/controllers/StockController";
 import ClientController from "./app/controllers/ClientController";
+import ChangePasswordController from "./app/controllers/ChangePasswordController";
 
 import authMiddleware from "./app/middlewares/auth";
 
@@ -19,6 +20,8 @@ const upload = multer(multerConfig);
 
 routes.post("/users", UserController.store);
 routes.post("/sessions", SessionController.store);
+
+routes.put("/passwords", ChangePasswordController.update);
 
 routes.use(authMiddleware);
 
