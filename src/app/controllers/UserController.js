@@ -3,6 +3,12 @@ import User from "../models/User";
 import File from "../models/File";
 
 class UserController {
+  async index(req, res) {
+    const user = await User.findByPk(req.userId);
+
+    return res.json(user);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
@@ -26,7 +32,7 @@ class UserController {
       name,
       email,
       provider,
-      status
+      status,
     });
   }
 
