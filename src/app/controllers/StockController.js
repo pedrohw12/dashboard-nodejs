@@ -1,8 +1,4 @@
-import * as Yup from "yup";
 import Stock from "../models/Stock";
-import { parseISO, format, addHours, startOfHour } from "date-fns";
-import { format, zonedTimeToUtc } from "date-fns-tz";
-import pt from "date-fns/locale/pt";
 
 class StockController {
   async index(req, res) {
