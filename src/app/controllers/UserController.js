@@ -6,7 +6,9 @@ class UserController {
   async index(req, res) {
     const user = await User.findByPk(req.userId);
 
-    return res.json(user);
+    const { status } = user;
+
+    return res.json({ status });
   }
 
   async store(req, res) {
