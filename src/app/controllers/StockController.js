@@ -1,19 +1,61 @@
+import { Op } from "sequelize";
 import Stock from "../models/Stock";
 
 class StockController {
   async index(req, res) {
-    const stocks = await Stock.findAll({
-      where: { user_id: req.userId },
-      order: ["date"],
-      attributes: ["id", "date", "price"],
-      // include: [
-      //   {
-      //     model: User,
-      //     as: "user",
-      //     attributes: ["id", "name"],
-      //   },
-      // ],
-    });
+    const { startDate, endDate } = req.body;
+    let stocks = null;
+
+    if (!startDate && !endDate) {
+      stocks = await Stock.findAll({
+        where: { user_id: req.userId },
+        order: ["date"],
+        attributes: ["id", "date", "price"],
+      });
+    }
+
+    if (startDate && !endDate) {
+      var d = new Date();
+      var curr_date = d.getDate();
+      var curr_month = d.getMonth() + 1; //Months are zero based
+      var curr_year = d.getFullYear();
+      let defaultEndDate = curr_year + "-" + curr_month + "-" + curr_date;
+
+      stocks = await Stock.findAll({
+        where: {
+          user_id: req.userId,
+          date: {
+            [Op.between]: [startDate, defaultEndDate],
+          },
+        },
+        order: ["date"],
+        attributes: ["id", "date", "price"],
+      });
+    } else if (!startDate && endDate) {
+      let defaultStartDate = "2019-01-01";
+
+      stocks = await Stock.findAll({
+        where: {
+          user_id: req.userId,
+          date: {
+            [Op.between]: [defaultStartDate, endDate],
+          },
+        },
+        order: ["date"],
+        attributes: ["id", "date", "price"],
+      });
+    } else if (startDate && endDate) {
+      stocks = await Stock.findAll({
+        where: {
+          user_id: req.userId,
+          date: {
+            [Op.between]: [startDate, endDate],
+          },
+        },
+        order: ["date"],
+        attributes: ["id", "date", "price"],
+      });
+    }
 
     const stockPrices = stocks.map((item) => item.price);
 

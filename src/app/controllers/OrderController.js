@@ -1,20 +1,61 @@
-import * as Yup from "yup";
+import { Op } from "sequelize";
 import Order from "../models/Order";
 
 class SaleController {
   async index(req, res) {
-    const orders = await Order.findAll({
-      where: { user_id: req.userId },
-      order: ["date"],
-      attributes: ["id", "date", "product", "client", "price", "delivery"],
-      // include: [
-      //   {
-      //     model: User,
-      //     as: "user",
-      //     attributes: ["id", "name"],
-      //   },
-      // ],
-    });
+    const { startDate, endDate } = req.body;
+    let orders = null;
+
+    if (!startDate && !endDate) {
+      const orders = await Order.findAll({
+        where: { user_id: req.userId },
+        order: ["date"],
+        attributes: ["id", "date", "product", "client", "price", "delivery"],
+      });
+    }
+
+    if (startDate && !endDate) {
+      var d = new Date();
+      var curr_date = d.getDate();
+      var curr_month = d.getMonth() + 1; //Months are zero based
+      var curr_year = d.getFullYear();
+      let defaultEndDate = curr_year + "-" + curr_month + "-" + curr_date;
+
+      orders = await Order.findAll({
+        where: {
+          user_id: req.userId,
+          date: {
+            [Op.between]: [startDate, defaultEndDate],
+          },
+        },
+        order: ["date"],
+        attributes: ["id", "date", "product", "client", "price", "delivery"],
+      });
+    } else if (!startDate && endDate) {
+      let defaultStartDate = "2019-01-01";
+
+      orders = await Order.findAll({
+        where: {
+          user_id: req.userId,
+          date: {
+            [Op.between]: [defaultStartDate, endDate],
+          },
+        },
+        order: ["date"],
+        attributes: ["id", "date", "product", "client", "price", "delivery"],
+      });
+    } else if (startDate && endDate) {
+      orders = await Order.findAll({
+        where: {
+          user_id: req.userId,
+          date: {
+            [Op.between]: [startDate, endDate],
+          },
+        },
+        order: ["date"],
+        attributes: ["id", "date", "product", "client", "price", "delivery"],
+      });
+    }
 
     const orderPrices = orders.map((item) => item.price);
 
