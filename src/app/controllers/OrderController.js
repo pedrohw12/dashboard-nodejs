@@ -7,7 +7,7 @@ class SaleController {
     let orders = null;
 
     if (!startDate && !endDate) {
-      const orders = await Order.findAll({
+      orders = await Order.findAll({
         where: { user_id: req.userId },
         order: ["date"],
         attributes: ["id", "date", "product", "client", "price", "delivery"],
