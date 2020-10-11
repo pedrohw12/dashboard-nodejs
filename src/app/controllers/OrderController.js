@@ -3,7 +3,7 @@ import Order from "../models/Order";
 
 class SaleController {
   async index(req, res) {
-    const { startDate, endDate } = req.body;
+    const { startDate, endDate } = req.query;
     let orders = null;
 
     if (!startDate && !endDate) {

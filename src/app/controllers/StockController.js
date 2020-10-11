@@ -3,7 +3,7 @@ import Stock from "../models/Stock";
 
 class StockController {
   async index(req, res) {
-    const { startDate, endDate } = req.body;
+    const { startDate, endDate } = req.query;
     let stocks = null;
 
     if (!startDate && !endDate) {
